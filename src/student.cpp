@@ -89,25 +89,28 @@ bool pop(Stack& s, int& nilai) {
         Node* hapus = s.top;
         nilai = s.top->data;
         s.top = s.top->next;
-        delete hapus;
-        return true;
+        delete hapus;   
     }
+    return true;
 }
 
 // SOAL 3
 void clear(Stack& s) {
-    Node* hapus = s.top;
-    while (hapus != nullptr) {
-        Node* temp = hapus->next;
-        delete hapus;
-        hapus = temp;
+    if(s.top == nullptr) {
+        return;
+    } else {
+        while(s.top != nullptr) {
+            Node* hapus = s.top;
+            s.top = s.top->next;
+            delete hapus;
+        }
     }
-    s.top = nullptr;
 }
 
 // SOAL 4
 bool kurungSeimbang(const string& ekspresi) {
     Stack s;
+    inisialisasi(s);
     s.top = nullptr;
     for (char c : ekspresi) {
         if (c == '(' || c == '[' || c == '{') {
