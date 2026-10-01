@@ -109,36 +109,39 @@ void clear(Stack& s) {
 
 // SOAL 4
 bool kurungSeimbang(const string& ekspresi) {
-    Stack s;
+   Stack s;
     inisialisasi(s);
-    s.top = nullptr;
+
     for (char c : ekspresi) {
         if (c == '(' || c == '[' || c == '{') {
-            push(s,c);
+            push(s, (c));
         } else if (c == ')' || c == ']' || c == '}') {
-            if(s.top == nullptr) {
+            if (isEmpty(s)) {
                 clear(s);
                 return false;
             }
 
-            char topChar = s.top->data;
+            int atas = 0;
+            if (!peek(s, atas)) {
+                clear(s);
+                return false;
+            }
 
-            if ((c == ')' && topChar == '(') ||
-                (c == ']' && topChar == '[') ||
-                (c == '}' && topChar == '{')) {
-                int temp;
-                pop(s, temp);
-            } else {
+            bool cocok = (atas == '(' && c == ')') ||
+                         (atas == '[' && c == ']') ||
+                         (atas == '{' && c == '}');
+            int dibuang = 0;
+            pop(s, dibuang);
+
+            if (!cocok) {
                 clear(s);
                 return false;
             }
         }
-    } 
-    bool seimbang = (s.top == nullptr);
-
+    }
+    bool hasil = isEmpty(s);
     clear(s);
-
-    return seimbang;
+    return hasil;
 }
 
 // =============================================================================
