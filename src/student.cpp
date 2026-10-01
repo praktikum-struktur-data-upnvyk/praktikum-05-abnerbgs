@@ -90,58 +90,53 @@ bool pop(Stack& s, int& nilai) {
         nilai = s.top->data;
         s.top = s.top->next;
         delete hapus;   
+        return true;
     }
-    return true;
+    
 }
 
 // SOAL 3
 void clear(Stack& s) {
-    if(s.top == nullptr) {
-        return;
-    } else {
-        while(s.top != nullptr) {
-            Node* hapus = s.top;
-            s.top = s.top->next;
-            delete hapus;
-        }
+   while (s.top != nullptr) {
+        Node* hapus = s.top;
+        s.top = s.top->next;
+        delete hapus;
     }
+    s.top = nullptr;
 }
 
 // SOAL 4
 bool kurungSeimbang(const string& ekspresi) {
-   Stack s;
-    inisialisasi(s);
+    Stack s;
+    inisialisasi(s); 
 
     for (char c : ekspresi) {
         if (c == '(' || c == '[' || c == '{') {
-            push(s, (c));
+            push(s, c);
         } else if (c == ')' || c == ']' || c == '}') {
-            if (isEmpty(s)) {
+            if (s.top == nullptr) {
                 clear(s);
                 return false;
             }
 
-            int atas = 0;
-            if (!peek(s, atas)) {
-                clear(s);
-                return false;
-            }
+            char topChar = (char)s.top->data;
 
-            bool cocok = (atas == '(' && c == ')') ||
-                         (atas == '[' && c == ']') ||
-                         (atas == '{' && c == '}');
-            int dibuang = 0;
-            pop(s, dibuang);
-
-            if (!cocok) {
+            if ((c == ')' && topChar == '(') ||
+                (c == ']' && topChar == '[') ||
+                (c == '}' && topChar == '{')) {
+                int temp;
+                pop(s, temp);
+            } else {
                 clear(s);
                 return false;
             }
         }
-    }
-    bool hasil = isEmpty(s);
-    clear(s);
-    return hasil;
+    } 
+
+    bool seimbang = (s.top == nullptr);
+    clear(s); 
+
+    return seimbang;
 }
 
 // =============================================================================
