@@ -44,11 +44,9 @@ using namespace std;
 // persis, hanya saja ia juga memindahkan `s.top` dan membuang node-nya.
 
 void inisialisasi(Stack& s) {
-    Node* newNode = new Node();
-    newNode->next = nullptr;
-    newNode->data = 0;
-    s.top = newNode;
+    s.top = nullptr;
 }
+
 
 bool isEmpty(const Stack& s) {
     return s.top == nullptr;
